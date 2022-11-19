@@ -1,12 +1,9 @@
-%Càlcul densitat de l'aire en funció de l'altura
-%Posa la velocitat en km/h
-v = 800; %[km/h]
+function [rho,P,T,a,M,visco_din] = DensAltura(z,v)
+%%Càlcul de la densitat en fucnió de l'altura. També del Mach
 v = v/3.6;
-%Posa la altura
-z = 36000/3.2808; %[m]
+visco_cinem = 1.8e-5;
 
 if z <=11000
-  
 R = 287;
 g = 9.81;
 z0 = 0;
@@ -24,12 +21,13 @@ exponentP = (-(g/(R*gradient)));
 P = P0*((T/T0)^exponentP);
 a = sqrt(gamma*R*T);
 M = v/a;
+
 elseif z > 11000
     
 R = 287;
 g = 9.81;
 z0 = 11000;
-gradient = 0;
+
 T0 = 216.65;
 P0 = 22632;
 rho0 = 0.3639;
@@ -43,16 +41,7 @@ a = sqrt(gamma*R*T);
 M = v/a;
 end
 
-disp('La densitat (kg/m3) és de:');
-disp(rho);
+visco_din = visco_cinem/rho;
 
+end
 
-
-disp('La pressió (Pa) és de:');
-disp(P);
-
-disp('La velocitat del so és de:')
-disp(a);
-
-disp('La velocitat en Mach es de:')
-disp(M);
