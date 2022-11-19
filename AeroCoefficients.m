@@ -92,7 +92,7 @@ CL_Cruise = W_cruise/(0.5*rho*v_c_m^2*Sw);
 CL_Cruise_W = CL_Cruise/0.95;
 
 %Ideal lift coefficient
-CL_ideal = CL_Cruise_W/0.9;
+Cl_i = CL_Cruise_W/0.9;
 
 %% Takeoff (Ltakeoff = Wtakeoff)
 z_sea = 0;
@@ -101,7 +101,7 @@ z_sea = 0;
 CL_max = 2.6;
 
 %Environment Conditions
-[rho_sea,P_sea,T_sea,a_sea,M_sea,visco_din_sea] = DensAltura(z_sea,v_s);
+[rho_sea,P_sea,T_sea,a_sea,M_sea,visco_din_sea] = DensAltura(z_sea,v_c); %Revisar quina ha de ser realment aquesta velocitat
 
 %Takeoff Weight
 m_takeoff = MTOW - (MTOW*(1-W3_W1));
@@ -117,7 +117,27 @@ v_s = v_s_m*3.6;
 CL_max_w = CL_max/0.95;
 
 %Max lift coeficient gross (Considered in a previous section as a requirement)
-CL_max_gross = CL_max_w/0.9;
+Cl_max_gross = CL_max_w/0.9;
+
+%%
+%High-lift device
+k = 1.2; %From Sadraey
+V_TO = k * v_s;
+
+V_TO_m = V_TO/3.6;
+
+C_f_C = 0.3; %relation between HLD and wing chord 
+
+Delta_C_L_HLD = 1.6 * C_f_C; %Value for double slot flap (Sadraey)
+
+%Wing airfoil net maximum lift coefficient
+Cl_max = Cl_max_gross - Delta_C_L_HLD;
+
+%There is no airfoil for our Cl_max in the grafic.
+
+
+%% Wing incidence
+
 
 
 

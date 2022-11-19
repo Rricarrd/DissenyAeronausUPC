@@ -109,8 +109,29 @@ W_takeoff = m_takeoff*g;
 
 
 %Stall speed
-v_s_m = sqrt((2*W_takeoff)/(rho_sea*))
+v_s_m = sqrt((2*W_takeoff)/(rho_sea*CL_max*Sw));
+v_s = v_s_m*3.6;
  
+
+%Max lift coeficient wing (Considered in a previous section as a requirement)
+CL_max_w = CL_max/0.95;
+
+%Max lift coeficient gross (Considered in a previous section as a requirement)
+Cl_max_gross = CL_max_w/0.9;
+
+%High-lift device
+k = 1.2; %From Sadraey
+V_TO = k * v_s;
+
+V_TO_m = V_TO/3.6;
+
+C_f_C = 0.28; %relation between HLD and wing chord // value of Learjet 25
+
+Delta_C_L_HLD = 1.3 * C_f_C; %Value for single slot flap
+
+%Wing airfoil net maximum lift coefficient
+Cl_max = Cl_max_gross - Delta_C_L_HLD;
+
 
 
 
