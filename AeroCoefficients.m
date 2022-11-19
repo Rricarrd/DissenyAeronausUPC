@@ -137,6 +137,8 @@ Cl_max = Cl_max_gross - Delta_C_L_HLD;
 
 
 %% Wing incidence
+%When we have the airfoil, we can look at the Cl-alpha graph to see at what
+%angle we have Cl_i
 
 
 
