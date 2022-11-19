@@ -128,12 +128,12 @@ V_TO_m = V_TO/3.6;
 
 C_f_C = 0.3; %relation between HLD and wing chord 
 
-Delta_C_L_HLD = 1.6 * C_f_C; %Value for double slot flap (Sadraey)
+Delta_C_L_HLD = 1.3; %Value for Fowler flap (Sadraey)
 
 %Wing airfoil net maximum lift coefficient
 Cl_max = Cl_max_gross - Delta_C_L_HLD;
 
-%There is no airfoil for our Cl_max in the grafic.
+%Airfoil Selected: 
 
 
 %% Wing incidence
