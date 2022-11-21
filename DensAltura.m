@@ -1,6 +1,6 @@
-function [rho,P,T,a,M,visco_din] = DensAltura(z,v)
+function [rho,P,T,a,visco_din] = DensAltura(z)
 %%Càlcul de la densitat en fucnió de l'altura. També del Mach
-v = v/3.6;
+
 visco_cinem = 1.8e-5;
 
 if z <=11000
@@ -20,7 +20,7 @@ rho = rho0*((T/T0)^exponent);
 exponentP = (-(g/(R*gradient)));
 P = P0*((T/T0)^exponentP);
 a = sqrt(gamma*R*T);
-M = v/a;
+
 
 elseif z > 11000
     
@@ -38,7 +38,7 @@ zrel = z-z0;
 rho = rho0*exp((-g/(R*T))*zrel);
 P = P0*exp((-g/(R*T))*zrel);
 a = sqrt(gamma*R*T);
-M = v/a;
+
 end
 
 visco_din = visco_cinem/rho;
