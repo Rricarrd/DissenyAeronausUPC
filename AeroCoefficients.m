@@ -1,3 +1,5 @@
+clear
+clc
 %% Weights From Previous Code
 %% ############### WeightFractions ##############
 %% TabulatedValues
@@ -101,11 +103,8 @@ z_sea = 0;
 CL_max = 1.6;
 
 %Environment Conditions
-<<<<<<< HEAD
-[rho_sea,P_sea,T_sea,a_sea,M_sea,visco_din_sea] = DensAltura(z_sea,v_c); %Revisar quina ha de ser realment aquesta velocitat
-=======
 [rho_sea,P_sea,T_sea,a_sea,visco_din_sea] = DensAltura(z_sea);
->>>>>>> 9ea14c793aacb5218880b6d6173877f2b6117b9a
+
 
 %Takeoff Weight
 m_takeoff = MTOW - (MTOW*(1-W3_W1));
@@ -116,31 +115,26 @@ W_takeoff = m_takeoff*g;
 k = 1.2;
 v_s_m = sqrt((2*W_takeoff)/(rho_sea*CL_max*Sw));
 v_s = v_s_m*3.6;
+
 v_to = v_s*k;
- 
+v_to_m = v_to/3.6;
 
 %Max lift coeficient wing (Considered in a previous section as a requirement)
 CL_max_w = CL_max/0.95;
 
 %Max lift coeficient gross (Considered in a previous section as a requirement)
-Cl_max_gross = CL_max_w/0.9;
+CL_max_gross = CL_max_w/0.9;
 
 %%
 %High-lift device
-k = 1.2; %From Sadraey
-V_TO = k * v_s;
-
-V_TO_m = V_TO/3.6;
-
 C_f_C = 0.3; %relation between HLD and wing chord 
 
 Delta_C_L_HLD = 1.3; %Value for Fowler flap (Sadraey)
 
 %Wing airfoil net maximum lift coefficient
-Cl_max = Cl_max_gross - Delta_C_L_HLD;
+CL_max_takeoff_noflap = CL_max_gross - Delta_C_L_HLD;
 
-%Airfoil Selected: NACA 2412
-
+%Airfoil Selected: 
 
 %% Wing incidence
 %We can look at the Cl-alpha graph to see at what angle we have Cl_i.
@@ -148,7 +142,6 @@ Cl_max = Cl_max_gross - Delta_C_L_HLD;
 %Mirant les gràfiques de CL vs alpha del perfil NACA-2412 sembla que no
 %caldra donar-li incidencia a l'ala.
 
-%%
 
 
 
@@ -164,9 +157,10 @@ W_landing = m_landing*g;
 
 
 %Stall speed landing
+k_landing = 1.2; %From Sadraey
 v_s_m_l = sqrt((2*W_landing)/(rho_sea*CL_max_landing*Sw));
 v_s_l = v_s_m_l*3.6;
- 
+v_landing = v_s_l*k_landing; 
 
 %Max lift coeficient wing (Considered in a previous section as a requirement)
 CL_max_w_landing = CL_max_landing/0.95;
@@ -174,6 +168,13 @@ CL_max_w_landing = CL_max_landing/0.95;
 %Max lift coeficient gross (Considered in a previous section as a requirement)
 CL_max_gross_landing = CL_max_w_landing/0.9;
 
+%%
+%High-lift device
+% C_f_C = 0.3; %relation between HLD and wing chord 
+% Delta_C_L_HLD = 1.3; %Value for Fowler flap (Sadraey)
+
+%Wing airfoil net maximum lift coefficient
+CL_max_landing_noflap  = CL_max_gross_landing - Delta_C_L_HLD;
 
 
 
