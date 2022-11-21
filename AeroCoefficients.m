@@ -71,7 +71,7 @@ g = 9.8;
 z = 11000; %[m]
 
 %Environment Conditions
-[rho,P,T,a,M,visco_din] = DensAltura(z,v_c);
+[rho,P,T,a,visco_din] = DensAltura(z);
 
 %Weights determination
 mi_cruise = MTOW - (MTOW*(1-W4_W1*W5_W4)) ;
@@ -98,10 +98,14 @@ Cl_i = CL_Cruise_W/0.9;
 z_sea = 0;
 
 %Max lift coeficient (Considered in a previous section as a requirement)
-CL_max = 2.6;
+CL_max = 1.6;
 
 %Environment Conditions
+<<<<<<< HEAD
 [rho_sea,P_sea,T_sea,a_sea,M_sea,visco_din_sea] = DensAltura(z_sea,v_c); %Revisar quina ha de ser realment aquesta velocitat
+=======
+[rho_sea,P_sea,T_sea,a_sea,visco_din_sea] = DensAltura(z_sea);
+>>>>>>> 9ea14c793aacb5218880b6d6173877f2b6117b9a
 
 %Takeoff Weight
 m_takeoff = MTOW - (MTOW*(1-W3_W1));
@@ -109,8 +113,10 @@ W_takeoff = m_takeoff*g;
 
 
 %Stall speed
+k = 1.2;
 v_s_m = sqrt((2*W_takeoff)/(rho_sea*CL_max*Sw));
 v_s = v_s_m*3.6;
+v_to = v_s*k;
  
 
 %Max lift coeficient wing (Considered in a previous section as a requirement)
@@ -146,6 +152,27 @@ Cl_max = Cl_max_gross - Delta_C_L_HLD;
 
 
 
+%% Landing (Llanding = Wlanding)
+z_sea = 0;
+
+%Max lift coeficient (Considered in a previous section as a requirement)
+CL_max_landing = 2.6;
+
+%Landing Weight
+m_landing = MTOW-W4_W1*W5_W4*W6_W5*W7_W6*W8_W7*W9_W8*W10_W9*W11_W10;
+W_landing = m_landing*g;
+
+
+%Stall speed landing
+v_s_m_l = sqrt((2*W_landing)/(rho_sea*CL_max_landing*Sw));
+v_s_l = v_s_m_l*3.6;
+ 
+
+%Max lift coeficient wing (Considered in a previous section as a requirement)
+CL_max_w_landing = CL_max_landing/0.95;
+
+%Max lift coeficient gross (Considered in a previous section as a requirement)
+CL_max_gross_landing = CL_max_w_landing/0.9;
 
 
 

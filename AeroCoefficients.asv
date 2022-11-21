@@ -98,7 +98,7 @@ Cl_i = CL_Cruise_W/0.9;
 z_sea = 0;
 
 %Max lift coeficient (Considered in a previous section as a requirement)
-CL_max = 2.6;
+CL_max = 1.6;
 
 %Environment Conditions
 [rho_sea,P_sea,T_sea,a_sea,M_sea,visco_din_sea] = DensAltura(z_sea,v_c); %Revisar quina ha de ser realment aquesta velocitat
@@ -117,6 +117,7 @@ v_s = v_s_m*3.6;
 CL_max_w = CL_max/0.95;
 
 %Max lift coeficient gross (Considered in a previous section as a requirement)
+<<<<<<< HEAD
 Cl_max_gross = CL_max_w/0.9;
 
 %%
@@ -146,6 +147,32 @@ Cl_max = Cl_max_gross - Delta_C_L_HLD;
 
 
 
+=======
+CL_max_gross = CL_max_w/0.9;
+
+
+%% Landing (Llanding = Wlanding)
+z_sea = 0;
+
+%Max lift coeficient (Considered in a previous section as a requirement)
+CL_max = 2.6;
+
+%Landing Weight
+m_takeoff = MTOW-W4_W1*W5_W4*W6_W5*W7_W6*W8_W7*W9_W8*W10_W9*)
+W_takeoff = m_takeoff*g;
+
+
+%Stall speed
+v_s_m = sqrt((2*W_takeoff)/(rho_sea*CL_max*Sw));
+v_s = v_s_m*3.6;
+ 
+
+%Max lift coeficient wing (Considered in a previous section as a requirement)
+CL_max_w = CL_max/0.95;
+
+%Max lift coeficient gross (Considered in a previous section as a requirement)
+CL_max_gross = CL_max_w/0.9;
+>>>>>>> 9ea14c793aacb5218880b6d6173877f2b6117b9a
 
 
 
