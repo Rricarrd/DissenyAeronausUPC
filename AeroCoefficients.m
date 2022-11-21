@@ -133,12 +133,16 @@ Delta_C_L_HLD = 1.3; %Value for Fowler flap (Sadraey)
 %Wing airfoil net maximum lift coefficient
 Cl_max = Cl_max_gross - Delta_C_L_HLD;
 
-%Airfoil Selected: 
+%Airfoil Selected: NACA 2412
 
 
 %% Wing incidence
-%When we have the airfoil, we can look at the Cl-alpha graph to see at what
-%angle we have Cl_i
+%We can look at the Cl-alpha graph to see at what angle we have Cl_i.
+
+%Mirant les gràfiques de CL vs alpha del perfil NACA-2412 sembla que no
+%caldra donar-li incidencia a l'ala.
+
+%%
 
 
 
