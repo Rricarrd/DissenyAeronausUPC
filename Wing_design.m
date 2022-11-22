@@ -176,7 +176,9 @@ CL_max_takeoff_noflap = CL_max_gross - Delta_C_L_HLD;
 
 %% 16. The wing lift at cruise must be equal to the required cruise lift coeff (Step 5). If not, return to 10 and change incidence
 
-%% 17.  
+%% 17. Calculate the wing lift coefficient at take-off (CLw_TO). 
+%Employ a flap at take-off with deflection δf and wing angle of attack αw = αsTO − 1. 
+%Note that αs at take-off is usually smaller than αs at cruise. Please note that the minus one (−1) is for safety.  
 
 
 
