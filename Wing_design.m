@@ -147,33 +147,97 @@ C_L_TO = 0.85 * 2 * W_takeoff/(rho_sea*v_to_m^2*Sw);
 
 %% 7. Select the HLD type and its location on the wing
 
+%for the type of aircraft that we are working with and the expected Delta
+%Cl it will probably be a () flap
+
 %% 8. Determine the HLD geometry (span, chord and maximmum deflection)
 
-C_f_C = 0.3; %relation between HLD and wing chord 
+C_f_C = 0.3; %relation between HLD and wing chord (based on similar aircraft)
 
 Delta_C_L_HLD = 1.3; %Value for Fowler flap (Sadraey)
 
 %Wing airfoil net maximum lift coefficient
 CL_max_takeoff_noflap = CL_max_gross - Delta_C_L_HLD;
 
+%define b_flap, and maximum deflection
+
 %% 9. Select airfoil
 
 %Airfoil Selected: 
+
+Cl_alpha = ; %1/rad
+alpha_0 = ; %deg
+
 
 %% 10. Determine the wing incidence
 
 %We can look at the Cl-alpha graph to see at what angle we have Cl_i.
 
+i_w = 2;
+
 %% 11. Select the sweep angle and the dihedral angle.
+
+Sweep = 25; %value in degrees, it's just a first approximation
+Dihedral = 2; %value in degrees, it's just a first approximation
 
 %% 12. Select other wing parameters such as AR, Tapper ratio, and wing twist
 
+AR = 9;
+taper = 0.35;
+twist = -0.5;
+
 %% 13. Calculate lift distribution at cruise. (We can use XFLR5 or lifting line theory, see section 5.14)
+%Lifting line theory
+
+N = 19; % (number of segments - 1)
+
+
+b = sqrt(AR*Sw); % wing span (m)
+MAC = Sw/b; % Mean Aerodynamic Chord (m)
+Croot = (1.5*(1+taper)*MAC)/(1+taper+taper^2); % root chord (m)
+theta = pi/(2*N):pi/(2*N):pi/2;
+alpha = i_w+twist:-twist/(N-1):i_w;
+% segment’s angle of attack
+z = (b/2)*cos(theta);
+c = Croot * (1 - (1-taper)*cos(theta)); % Mean Aerodynamics Chord at each segment (m)
+mu = c * Cl_alpha / (4 * b);
+LHS = mu .* (alpha-alpha_0)/57.3; % Left Hand Side
+% Solving N equations to find coefficients A(i):
+for i=1:N
+for j=1:N
+B(i,j) = sin((2*j-1) * theta(i)) * (1 + (mu(i) * (2*j-1)) / sin(theta(i)));
+end
+end
+A=B\transpose(LHS);
+for i = 1:N
+sum1(i) = 0;
+sum2(i) = 0;
+for j = 1 : N
+sum1(i) = sum1(i) + (2*j-1) * A(j)*sin((2*j-1)*theta(i));
+sum2(i) = sum2(i) + A(j)*sin((2*j-1)*theta(i));
+end
+end
+CL = 4*b*sum2 ./ c;
+CL1(1) = 0;
+y_s(1) = b/2;
+
+for i = 2:N+1
+    CL1(i) = CL(i-1);
+    y_s(i) = z(i-1);
+end
+
+plot(y_s,CL1,'-o')
+grid
+title('Lift distribution')
+xlabel('Semi-span location (m)')
+ylabel ('Lift coefficient')
+CL_wing = pi * AR * A(1);
+%L = 0.5 * rho * V^2 * Sw * CL_wing;
 
 %% 14. Check the lift distribution at cruise is elliptic, otherwise change some parameters of step 13
 
 %% 15. Calculate the wing lift at cruise
-
+%L = 0.5 * rho * V^2 * Sw * CL_wing;
 %% 16. The wing lift at cruise must be equal to the required cruise lift coeff (Step 5). If not, return to 10 and change incidence
 
 %% 17. Calculate the wing lift coefficient at take-off (CLw_TO). 
