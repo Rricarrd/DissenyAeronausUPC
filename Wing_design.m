@@ -234,8 +234,13 @@ grid
 title('Lift distribution')
 xlabel('Semi-span location (m)')
 ylabel ('Lift coefficient')
+<<<<<<< HEAD
+CL_wing = pi * AR * A(1);
+
+=======
 CL_wing_cruise = pi * AR * A(1);
 %L = 0.5 * rho * V^2 * Sw * CL_wing;
+>>>>>>> 0b231a1770d7885a7f5dad2e5e0d9e063ca6d261
 
 %% 14. Check the lift distribution at cruise is elliptic, otherwise change some parameters of step 13
 
