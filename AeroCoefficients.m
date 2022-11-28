@@ -82,8 +82,12 @@ mf_cruise = MTOW - (MTOW*(1-W4_W1*W5_W4*W6_W5));
 %Average weight
 W_cruise = 0.5*(mi_cruise +mf_cruise)*g;
 
+%Rough Approximations
+AR = 9;
+b = sqrt(Sw*AR);
+MAC = b/AR;
+
 %Reynolds
-MAC = 2; %[m] From similar airplanes
 Re_cruise = (v_c_m*MAC/visco_din);
 
 %Lift Coefficient
@@ -160,7 +164,8 @@ W_landing = m_landing*g;
 k_landing = 1.2; %From Sadraey
 v_s_m_l = sqrt((2*W_landing)/(rho_sea*CL_max_landing*Sw));
 v_s_l = v_s_m_l*3.6;
-v_landing = v_s_l*k_landing; 
+v_la = v_s_l*k_landing; 
+v_la_m = v_la/3.6;
 
 %Max lift coeficient wing (Considered in a previous section as a requirement)
 CL_max_w_landing = CL_max_landing/0.95;
@@ -168,8 +173,11 @@ CL_max_w_landing = CL_max_landing/0.95;
 %Max lift coeficient gross (Considered in a previous section as a requirement)
 CL_max_gross_landing = CL_max_w_landing/0.9;
 
-%%
-%High-lift device
+%% Re landing / Re takeoff
+v_sea_m = (v_to_m + v_la_m)/2;
+Re_sea = (v_sea_m*MAC/visco_din);
+
+%% High-lift device
 % C_f_C = 0.3; %relation between HLD and wing chord 
 % Delta_C_L_HLD = 1.3; %Value for Fowler flap (Sadraey)
 

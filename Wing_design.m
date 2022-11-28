@@ -169,24 +169,23 @@ Cl_alpha_deg = 0.25; %1/deg
 Cl_alpha = (Cl_alpha_deg*360)/(2*pi); %1/rad
 
 
-alpha_0 = -2; %deg
-
-
 %% 10. Determine the wing incidence
 
-%We can look at the Cl-alpha graph to see at what angle we have Cl_i.
+alpha_0 = -2; %deg
 
+%We can look at the Cl-alpha graph to see at what angle we have Cl_i.
 i_w = 0;
 
 %% 11. Select the sweep angle and the dihedral angle.
 
-Sweep = 10; %value in degrees, it's just a first approximation
-Dihedral = 2; %value in degrees, it's just a first approximation
-
+Sweep_deg = 30; %value in degrees, it's just a first approximation
+Sweep = Sweep_deg/360*2*pi; %value in degrees, it's just a first approximation
+Dihedral_deg = 2; %value in degrees, it's just a first approximation
+Dihedral = Dihedral_deg/360*2*pi; %value in degrees, it's just a first approximation
 %% 12. Select other wing parameters such as AR, Tapper ratio, and wing twist
 
 AR = 9;
-taper = 0.35;
+taper = 0.4;
 twist = -0.5;
 
 %% 13. Calculate lift distribution at cruise. (We can use XFLR5 or lifting line theory, see section 5.14)
@@ -196,15 +195,19 @@ N = 19; % (number of segments - 1)
 
 
 b = sqrt(AR*Sw); % wing span (m)
-MAC = Sw/b; % Mean Aerodynamic Chord (m)
+MAC = Sw/b; % Approx Mean Aerodynamic Chord (m)
 Croot = (1.5*(1+taper)*MAC)/(1+taper+taper^2); % root chord (m)
 theta = pi/(2*N):pi/(2*N):pi/2;
 alpha = i_w+twist:-twist/(N-1):i_w;
+
 % segment’s angle of attack
 z = (b/2)*cos(theta);
 c = Croot * (1 - (1-taper)*cos(theta)); % Mean Aerodynamics Chord at each segment (m)
 mu = c * Cl_alpha / (4 * b);
 LHS = mu .* (alpha-alpha_0)/57.3; % Left Hand Side
+
+
+
 % Solving N equations to find coefficients A(i):
 for i=1:N
 for j=1:N
@@ -220,7 +223,7 @@ sum1(i) = sum1(i) + (2*j-1) * A(j)*sin((2*j-1)*theta(i));
 sum2(i) = sum2(i) + A(j)*sin((2*j-1)*theta(i));
 end
 end
-CL = 4*b*sum2 ./ c;
+CL = (4*b*sum2 ./ c)*(cos(Sweep)^2); %CL reduït per el sweep
 CL1(1) = 0;
 y_s(1) = b/2;
 
@@ -234,13 +237,10 @@ grid
 title('Lift distribution')
 xlabel('Semi-span location (m)')
 ylabel ('Lift coefficient')
-<<<<<<< HEAD
-CL_wing = pi * AR * A(1);
 
-=======
 CL_wing_cruise = pi * AR * A(1);
 %L = 0.5 * rho * V^2 * Sw * CL_wing;
->>>>>>> 0b231a1770d7885a7f5dad2e5e0d9e063ca6d261
+
 
 %% 14. Check the lift distribution at cruise is elliptic, otherwise change some parameters of step 13
 
