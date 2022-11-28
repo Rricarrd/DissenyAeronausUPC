@@ -165,19 +165,22 @@ CL_max_takeoff_noflap = CL_max_gross - Delta_C_L_HLD;
 
 %Airfoil Selected: 
 
-Cl_alpha = ; %1/rad
-alpha_0 = ; %deg
+Cl_alpha_deg = 0.25; %1/deg
+Cl_alpha = (Cl_alpha_deg*360)/(2*pi); %1/rad
+
+
+alpha_0 = -2; %deg
 
 
 %% 10. Determine the wing incidence
 
 %We can look at the Cl-alpha graph to see at what angle we have Cl_i.
 
-i_w = 2;
+i_w = 0;
 
 %% 11. Select the sweep angle and the dihedral angle.
 
-Sweep = 25; %value in degrees, it's just a first approximation
+Sweep = 10; %value in degrees, it's just a first approximation
 Dihedral = 2; %value in degrees, it's just a first approximation
 
 %% 12. Select other wing parameters such as AR, Tapper ratio, and wing twist
@@ -231,13 +234,20 @@ grid
 title('Lift distribution')
 xlabel('Semi-span location (m)')
 ylabel ('Lift coefficient')
+<<<<<<< HEAD
 CL_wing = pi * AR * A(1);
+
+=======
+CL_wing_cruise = pi * AR * A(1);
 %L = 0.5 * rho * V^2 * Sw * CL_wing;
+>>>>>>> 0b231a1770d7885a7f5dad2e5e0d9e063ca6d261
 
 %% 14. Check the lift distribution at cruise is elliptic, otherwise change some parameters of step 13
 
 %% 15. Calculate the wing lift at cruise
-%L = 0.5 * rho * V^2 * Sw * CL_wing;
+L_cruise = 0.5 * rho * v_c_m^2 * Sw * CL_wing_cruise; %[N]
+L_cruise_kgf = L_cruise/9.8;
+
 %% 16. The wing lift at cruise must be equal to the required cruise lift coeff (Step 5). If not, return to 10 and change incidence
 
 %% 17. Calculate the wing lift coefficient at take-off (CLw_TO). 
