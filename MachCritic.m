@@ -41,7 +41,7 @@ plot(Mcr_data,eqn_data);
 
 %We need to reduce our Mcrit by increasing the sweep angle
 Mcrit = double(abs(sol));
-sweep = acos(Mcrit/Minf);
+sweep = acos(sqrt(Mcrit/Minf));
 sweep_deg = sweep/(2*pi)*360; 
 
 
