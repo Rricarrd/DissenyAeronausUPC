@@ -126,6 +126,10 @@ CL_max_w = CL_max/0.95;
 CL_max_gross = CL_max_w/0.9;
 
 
+
+
+
+
 %% ########### 5.16-WING DESIGN STEPS ###########
 %% 1. Select Number of wings
 % The aircraft will use a monoplane configuration
@@ -163,35 +167,47 @@ CL_max_takeoff_noflap = CL_max_gross - Delta_C_L_HLD;
 
 %% 9. Select airfoil
 
-%Airfoil Selected: 
+%Airfoil Selected: NSNLF-0213
+%Punts coneguts del cruise
+alpha0 = -1;
+alpha1 = 2;
+Cl0 = 0;
+Cl1 = 0.58;
 
-Cl_alpha_deg = 0.25; %1/deg
+%Increments
+delta_alpha = alpha1-alpha0;
+deltaCl = Cl1-Cl0;
+
+%Pendent
+Cl_alpha_deg = deltaCl/delta_alpha ; %1/deg
 Cl_alpha = (Cl_alpha_deg*360)/(2*pi); %1/rad
 
 
 %% 10. Determine the wing incidence
 
-alpha_0 = -2; %deg
+alpha_0 = -1.1; %deg
 
 %We can look at the Cl-alpha graph to see at what angle we have Cl_i.
-i_w = 0;
+i_w = 0.35;
 
 %% 11. Select the sweep angle and the dihedral angle.
 
-Sweep_deg = 30; %value in degrees, it's just a first approximation
+Sweep_deg = 26.16; %value in degrees, it's just a first approximation
 Sweep = Sweep_deg/360*2*pi; %value in degrees, it's just a first approximation
-Dihedral_deg = 2; %value in degrees, it's just a first approximation
+
+Dihedral_deg = 5; %value in degrees, it's just a first approximation
 Dihedral = Dihedral_deg/360*2*pi; %value in degrees, it's just a first approximation
+
 %% 12. Select other wing parameters such as AR, Tapper ratio, and wing twist
 
 AR = 9;
-taper = 0.4;
-twist = -0.5;
+taper = 0.3;
+twist = -0.6;
 
 %% 13. Calculate lift distribution at cruise. (We can use XFLR5 or lifting line theory, see section 5.14)
 %Lifting line theory
 
-N = 19; % (number of segments - 1)
+N = 30; % (number of segments - 1)
 
 
 b = sqrt(AR*Sw); % wing span (m)
