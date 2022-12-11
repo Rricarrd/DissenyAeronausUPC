@@ -1,7 +1,7 @@
 function [rho,P,T,a,visco_din] = DensAltura(z)
 %%Càlcul de la densitat en fucnió de l'altura. També del Mach
 
-visco_cinem = 1.8e-5;
+
 
 if z <=11000
 R = 287;
@@ -41,6 +41,11 @@ a = sqrt(gamma*R*T);
 
 end
 
+%Calcul de la cinemàtica en funcio de la T
+b = 1.458e-6;
+S = 110.4;
+
+visco_cinem = (b*T^(3/2))/(T+S);
 visco_din = visco_cinem/rho;
 
 end

@@ -16,16 +16,15 @@ sigma=rho/rho_0;
 loading = W/S_wing;
 k_uc_landing = 4.5e-5;
 k_uc_takeoff = 3.16e-5;
-Mcr = 0.65;
+
 
 %Cd0
 K=1/(pi*e_oswald*AR);
 CD0=(2*T_max-(4*K*W^2)/(rho*sigma*V_max^2*S_wing))/(rho_0*V_max^2*S_wing);
 
 %Vecotrs de Cl i Cd
-CL=-1:0.01:3;
-CL_min_drag = 0.26;
-CD=CD0+K*(CL-CL_min_drag).^2;
+CL=-3:0.01:3;
+CD=CD0+K*CL.^2;
 
 
 
@@ -42,7 +41,7 @@ deltaCd_flaps_takeoff = 0.04;
 %% Plots
 %ClCd cruise prandtl galuert correction
 figure
-CD_cruise = CD/sqrt(1-Mcr^2);
+CD_cruise = CD
 plot(CD_cruise,CL)
 
 hold on
@@ -67,7 +66,7 @@ plot(CD_landing_no_gear,CL)
 xlabel('CD');
 ylabel('CL');
 title('Aerodynamic Polars');
-legend('Cruise','Takeoff','Landing','Takeoff no gear','Landing no gear','Location','southeast')
+legend('Cruise','Takeoff','Landing','Takeoff no gear','Landing no gear')
 grid on
 grid minor
 
