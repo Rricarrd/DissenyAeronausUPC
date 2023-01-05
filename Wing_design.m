@@ -188,7 +188,7 @@ Cl_alpha = (Cl_alpha_deg*360)/(2*pi); %1/rad
 alpha_0 = -1.1; %deg
 
 %We can look at the Cl-alpha graph to see at what angle we have Cl_i.
-i_w = 0.35;
+i_w = 1.34;
 
 %% 11. Select the sweep angle and the dihedral angle.
 
@@ -202,7 +202,7 @@ Dihedral = Dihedral_deg/360*2*pi; %value in degrees, it's just a first approxima
 
 AR = 9;
 taper = 0.3;
-twist = -0.6;
+twist = -1.3;
 
 %% 13. Calculate lift distribution at cruise. (We can use XFLR5 or lifting line theory, see section 5.14)
 %Lifting line theory
@@ -211,8 +211,8 @@ N = 30; % (number of segments - 1)
 
 
 b = sqrt(AR*Sw); % wing span (m)
-MAC = Sw/b; % Approx Mean Aerodynamic Chord (m)
-Croot = (1.5*(1+taper)*MAC)/(1+taper+taper^2); % root chord (m)
+MGC = Sw/b; % Approx Mean Aerodynamic Chord (m)
+Croot = (1.5*(1+taper)*MGC)/(1+taper+taper^2); % root chord (m)
 theta = pi/(2*N):pi/(2*N):pi/2;
 alpha = i_w+twist:-twist/(N-1):i_w;
 
